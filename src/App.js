@@ -1,14 +1,16 @@
 import logo from "./logo.svg";
 import "./App.css";
 import React, { useState } from "react";
-import AddProduct from "./components/AddProduct";
+import Navbar from "./components/NavBar";
+import { BrowserRouter } from "react-router-dom";
 
 function App() {
 
   return (
     <div>
-      {/**Display a menu here and switching using router */}
-      <AddProduct/>
+      <BrowserRouter>
+          <Navbar></Navbar>
+        </BrowserRouter>
     </div>
   );
 }
