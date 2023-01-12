@@ -1,7 +1,7 @@
 //This class is used within the AddProduct.js
 function ProductInfo({ product }, callBackFunction) {
 
-  //This one only use for deletion
+  //This is a child class used by a parent class AddProduct.js
   //const [productID, setProductiD] = useState("");
   const deleteProduct = () => {
     //Get the id

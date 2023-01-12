@@ -1,7 +1,12 @@
 import React from "react";
 import { Route, Routes, Link } from "react-router-dom";
-import AddProduct from "./AddProduct";
-import ProductOrder from "./ProductOrder";
+import AddProduct from "./product/AddProduct";
+import ProductOrder from "./product-order/ProductOrder";
+import ManufacturingOrder from "./manufacturing-order/ManufacturingOrder";
+import BillOfMaterial from "./bill-of-material/BillOfMaterial";
+import MaterialPurchaseOrder from "./material-purchase-order/MaterialPurchaseOrder";
+
+
 
 export default function Navbar({ fixed }) {
   const [navbarOpen, setNavbarOpen] = React.useState(false);
@@ -32,9 +37,10 @@ export default function Navbar({ fixed }) {
             id="example-navbar-danger"
           >
             <ul className="flex flex-col lg:flex-row list-none lg:ml-auto">
+
+
               <li className="nav-item">
                 <i className="fab fa-facebook-square text-lg leading-lg text-white opacity-75"></i>
-
                 <button className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
                   <Link to="/products">Product</Link>
                 </button>
@@ -52,9 +58,25 @@ export default function Navbar({ fixed }) {
               <li className="nav-item">
                 <i className="fab fa-twitter text-lg leading-lg text-white opacity-75"></i>
                 <button className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
-                  <Link to="/MoreInfoPage">More Info</Link>
+                  <Link to="/manufacturing-order">Manufacturing Order</Link>
                 </button>
               </li>
+
+
+              <li className="nav-item">
+                <i className="fab fa-twitter text-lg leading-lg text-white opacity-75"></i>
+                <button className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+                  <Link to="/bill-of-material">Bill of Material</Link>
+                </button>
+              </li>
+
+              <li className="nav-item">
+                <i className="fab fa-twitter text-lg leading-lg text-white opacity-75"></i>
+                <button className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+                  <Link to="/material-purchase-order">Material Purchase Order</Link>
+                </button>
+              </li>
+
             </ul>
           </div>
         </div>
@@ -64,6 +86,9 @@ export default function Navbar({ fixed }) {
       <Routes>
         <Route path="/products" element={<AddProduct/>} />
         <Route path="/product-order" element={<ProductOrder />} />
+        <Route path="/manufacturing-order" element={<ManufacturingOrder/>}/>
+        <Route path="/bill-of-material" element={<BillOfMaterial/>}/>
+        <Route path="/material-purchase-order" element={<MaterialPurchaseOrder/>}  />
       </Routes>
     </>
   );

@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Select from "react-select";
 import ProductInfo from "./ProductInfo";
+
+
+//This class is associated with Product.java in the backend
+
+
 function AddProduct(props) {
   //For create new data and update
   const [code, setCode] = useState("");
