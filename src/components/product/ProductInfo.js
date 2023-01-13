@@ -62,6 +62,11 @@ function ProductInfo({ product }, callBackFunction) {
         <span className="text-sm text-gray-500 dark:text-gray-400">
           code: {product.code}
         </span>
+
+        <span className="text-sm text-gray-500 dark:text-gray-400">
+          price: {product.price} $
+        </span>
+
         <div className="flex mt-4 space-x-3 md:mt-6"></div>
       </div>
     </div>

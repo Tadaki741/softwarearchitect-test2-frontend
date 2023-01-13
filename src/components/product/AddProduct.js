@@ -13,7 +13,7 @@ function AddProduct(props) {
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
   const [quantity, setQuantity] = useState(0);
-  const [parent, setParent] = useState("");
+  const [price, setPrice] = useState(0);
 
   //Use for updating the product
   const [productID,setProductID] = useState("");
@@ -22,7 +22,7 @@ function AddProduct(props) {
   //List to contain all the products from the database
   const [productNames, setProductNames] = useState([]);
 
-  const submitData = (code, name, description, category, quantity, parent) => {
+  const submitData = (code, name, description, category, quantity, price) => {
     //Prepare the data
 
     //Send data
@@ -40,14 +40,14 @@ function AddProduct(props) {
         description: description,
         category: category,
         quantity: quantity,
-        parent: parent,
+        price: price,
       }),
     })
       .then((response) => response.json())
       .then((response) => console.log(JSON.stringify(response.data)));
   };
 
-  const checkInputSubmit = (code,name,description,category,quantity,parent) => {
+  const checkInputSubmit = (code,name,description,category,quantity,price) => {
 
     if (code === "" || name === "" || description === "") {
       window.alert("Please enter all field");
@@ -56,21 +56,21 @@ function AddProduct(props) {
 
       //Show notifications
       
-      submitData(code, name, description, category, quantity, parent);
+      submitData(code, name, description, category, quantity, price);
 
       //Reload the page again
       window.location.reload();
     }
   };
 
-  const checkInputUpdate = (code,name,description,category,quantity,parent) => {
+  const checkInputUpdate = (code,name,description,category,quantity,price) => {
     //If all condition is good
     if (code === "" || name === "" || description === "" || category === "" || productID === "") {
       window.alert("please enter all the field");
       return;
     } else {
       //Ready to update
-      updateData(code, name, description, category, quantity, parent,productID);
+      updateData(code, name, description, category, quantity, price,productID);
 
       //Reload the page
       window.location.reload();
@@ -78,7 +78,7 @@ function AddProduct(props) {
     }
   };
 
-  const updateData = (code, name, description, category, quantity, parent,productID) => {
+  const updateData = (code, name, description, category, quantity, price,productID) => {
       //Send data
     fetch("http://localhost:8080/product/" + productID + "/update", {
       method: "PATCH",
@@ -94,7 +94,7 @@ function AddProduct(props) {
         description: description,
         category: category,
         quantity: quantity,
-        parent: parent,
+        price: price,
       }),
     })
       .then((response) => response.json())
@@ -225,14 +225,14 @@ function AddProduct(props) {
 
         <div>
           <label>
-            Parent:
+            Price:
             <input
-              type="text"
-              name="parent"
-              onClick={(e) => {
-                setParent(e.currentTarget.value);
+              type="number"
+              name="price"
+              onInputCapture={(e) => {
+                setPrice(e.currentTarget.value);
               }}
-              placeholder={props.parent}
+              placeholder={props.price}
             />
           </label>
         </div>
@@ -247,7 +247,7 @@ function AddProduct(props) {
                 description,
                 category,
                 quantity,
-                parent
+                price
               )
             }
           >
@@ -265,7 +265,7 @@ function AddProduct(props) {
                 description,
                 category,
                 quantity,
-                parent,
+                price,
                 productID
               )
             }
