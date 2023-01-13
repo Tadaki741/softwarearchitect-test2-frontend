@@ -1,7 +1,6 @@
 import React from "react";
 import { Route, Routes, Link } from "react-router-dom";
 import AddProduct from "./product/AddProduct";
-import ProductOrder from "./product-order/ProductOrder";
 import ManufacturingOrder from "./manufacturing-order/ManufacturingOrder";
 import BillOfMaterial from "./bill-of-material/BillOfMaterial";
 import MaterialPurchaseOrder from "./material-purchase-order/MaterialPurchaseOrder";
@@ -85,7 +84,6 @@ export default function Navbar({ fixed }) {
       {/**Nav bar to go to other pages */}
       <Routes>
         <Route path="/products" element={<AddProduct/>} />
-        <Route path="/product-order" element={<ProductOrder />} />
         <Route path="/manufacturing-order" element={<ManufacturingOrder/>}/>
         <Route path="/bill-of-material" element={<BillOfMaterial/>}/>
         <Route path="/material-purchase-order" element={<MaterialPurchaseOrder/>}  />
