@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useEffect } from "react";
 import Select from "react-select";
+import ManufacturingInfo from "./ManufacturingInfo";
 
 function ManufacturingOrder(props) {
   const [clientName, setClientName] = useState("");
@@ -16,6 +17,10 @@ function ManufacturingOrder(props) {
   //we need this array to reference to the id from the product site
   //List to contain all the products from the database
   const [productNames, setProductNames] = useState([]);
+
+
+  //This one for retrieving Manufacturing Order array
+  const [moList, setMOList] = useState([]);
 
   //Get all data to store inside the array
   const retrieveProductList = () => {
@@ -53,10 +58,31 @@ function ManufacturingOrder(props) {
       },
     };
 
-    fetch("http://localhost:8080/product/all", requestOptions)
+    fetch("http://localhost:8080/mo/all", requestOptions)
       .then((response) => response.json())
-      .then((data) => setProductNames(data.data));
+      .then((data) => setMOList(data.data));
   }, []);
+
+
+  const getMOList = () => {
+    fetch("http://localhost:8080/mo/all", {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        //Set the data
+        setMOList(data.data);
+        console.log(moList);
+      })
+      .catch((error) => console.error(error));
+
+      //Reload the page
+      window.location.reload();
+  }
 
   const createManufacturingOrderSubmit = (
     clientName,
@@ -76,6 +102,7 @@ function ManufacturingOrder(props) {
       selectedProduct === ""
     ) {
       window.alert("Please fill in all the field");
+      return;
     } else {
       window.alert(
         "clientName: " +
@@ -92,26 +119,29 @@ function ManufacturingOrder(props) {
           selectedProdutID
       );
       //Submit the data
-      fetch("http://localhost:8080/product/add", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Credentials": "true",
-      },
-      body: JSON.stringify({
-        code: code,
-        name: name,
-        description: description,
-        category: category,
-        quantity: quantity,
-        price: price,
-      }),
-    })
-      .then((response) => response.json())
-      .then((response) => console.log(JSON.stringify(response.data)));
+      fetch("http://localhost:8080/mo/add/" + selectedProdutID, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Credentials": "true",
+        },
+        body: JSON.stringify({
+          clientName: clientName,
+          deliveryDate: deliveryDate,
+          completeDate: completeDate,
+          startDate: startDate,
+          status: status,
+          product: null,
+        }),
+      })
+        .then((response) => response.json())
+        .then((response) => console.log(JSON.stringify(response.data)));
     }
+
+    //Reload page
+    window.location.reload();
   };
 
   return (
@@ -213,11 +243,10 @@ function ManufacturingOrder(props) {
           </button>
         </div>
 
-
         <div>
           <button
             className="text-gray-900 bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300 dark:focus:ring-lime-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
-            onClick={() => refreshProdu()}
+            onClick={() => getMOList()}
           >
             Refresh Manufacturing Order List
           </button>
@@ -241,6 +270,20 @@ function ManufacturingOrder(props) {
           </button>
         </div>
       </div>
+
+      {/**A section to list out all manufacturing order data */}
+      <div className="p-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 xl:grid-cols-3 gap-5">
+        {moList &&
+          moList.length > 0 &&
+          moList.map((p, i) => (
+            <ManufacturingInfo
+              key={i}
+              mo={p}
+            />
+          ))}
+      </div>
+
+
     </div>
   );
 }
