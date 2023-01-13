@@ -3,6 +3,8 @@
 
 function ManufacturingOrder () {
 
+    //Retrieve the list of product for them to manufacture
+    
 
     return (
         <div>
